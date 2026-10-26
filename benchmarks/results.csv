@@ -1,0 +1,7 @@
+program,before,after,reduction_percent,applied_transformations,notices
+constant_fold,3,0,100.0,1,
+dead_code,3,0,100.0,1,
+cse,3,2,33.33,1,
+strength,3,1,66.67,1,
+mixed,9,2,77.78,4,
+loop_unsupported,2,2,0.0,0,Skipped a block containing unsupported statements or control flow.

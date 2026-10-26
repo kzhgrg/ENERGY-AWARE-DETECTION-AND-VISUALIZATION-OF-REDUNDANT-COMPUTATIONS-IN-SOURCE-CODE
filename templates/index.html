@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f7f8fc"><title>Compiler Analysis Studio</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Workspace navigation">
+    <a class="brand" href="#workspace"><span class="brand-mark">◈</span><span>compiler<span class="brand-muted">studio</span><small>STATIC ANALYSIS</small></span></a>
+    <div class="nav-label">WORKSPACE</div>
+    <a class="nav-link active" href="#workspace"><span>▣</span> Code workspace</a>
+    <a class="nav-link" href="#insights"><span>▤</span> Analysis results</a>
+    <a class="nav-link" href="#explore"><span>◇</span> Visualizations</a>
+    <a class="nav-link" href="#energy"><span>◉</span> Energy lab</a>
+    <div class="sidebar-bottom"><span class="status-dot"></span> Local research workspace <small>Supported C subset · v2 interface</small></div>
+  </aside>
+  <div class="content">
+    <header class="topbar"><span class="breadcrumb">Workspace <span>/</span> Compiler analysis</span><span class="top-pill"><span class="status-dot"></span> Local environment</span></header>
+    <main>
+      <div class="page-heading"><div><div class="eyebrow">SOURCE OPTIMIZATION</div><h1>Code analysis <span class="heading-light">workspace</span></h1><p>Explore optimizations, trace control flow, and compare computational costs.</p></div><span class="project-chip">C / Static analysis</span></div>
+      <div id="workspace" class="workspace-panel panel">
+        <div class="panel-top"><div><h2>Code workspace</h2><p class="subtle">Edit a C program, then run the analysis.</p></div><div class="toolbar"><button id="sample" class="btn btn-subtle">↺ <span>Reset example</span></button><label class="btn btn-subtle upload">↑ <span>Import .c</span><input type="file" id="file" accept=".c,.h,text/plain"></label><button id="save" class="btn btn-subtle">↓ <span>Export JSON</span></button><button id="run" class="btn btn-primary">▶ <span>Analyze code</span></button></div></div>
+        <div class="editor-grid"><div class="editor-column"><div class="editor-label"><span><span class="file-dot"></span> main.c <span class="muted-inline">· Original</span></span><span class="editor-badge">EDITABLE</span></div><textarea id="code" aria-label="Original C code" spellcheck="false">int main() {
+    unsigned int factor = 7u;
+    unsigned int scaled = factor * 8;
+    int x = 4 * 5;
+    int a = x + 3;
+    int b = x + 3;
+    int unused = 99 * 2;
+    return a + b + scaled;
+}</textarea></div><div class="editor-column"><div class="editor-label"><span><span class="file-dot output-dot"></span> optimized.c <span class="muted-inline">· Output</span></span><span class="editor-badge output-badge">GENERATED</span></div><pre id="optimized" aria-label="Optimized C code">Run analysis to generate optimized C.</pre></div></div>
+        <div class="workspace-footer"><span id="status" role="status" aria-live="polite"><span class="status-dot"></span> Ready to analyze</span><span>Code is analyzed locally · Not executed</span></div>
+      </div>
+      <section id="insights" class="results-section"><div class="section-heading"><div><h2>Analysis overview</h2><p class="subtle">A quick look at your optimization results.</p></div></div>
+        <div class="metrics"><article class="metric"><span>Original cost</span><strong id="before">—</strong><small>Weighted operations</small></article><article class="metric"><span>Optimized cost</span><strong id="after">—</strong><small>Weighted operations</small></article><article class="metric metric-highlight"><span>Estimated reduction</span><strong id="reduction">—</strong><small>Static cost estimate</small></article><article class="metric"><span>Transformations</span><strong id="count">—</strong><small>Applied optimizations</small></article></div>
+        <div class="details-grid"><section class="panel compact-panel"><div class="panel-title"><h3>Optimization findings</h3><span class="quiet-label">DETECTIONS</span></div><div id="findings" class="findings-list">No analysis yet. Run your code to see findings.</div></section><section class="panel compact-panel"><div class="panel-title"><h3>Cost comparison</h3><span class="quiet-label">BEFORE / AFTER</span></div><div class="barlabel">Original <span id="beforeLabel">—</span></div><div class="track"><div id="barBefore" class="bar before"></div></div><div class="barlabel">Optimized <span id="afterLabel">—</span></div><div class="track"><div id="barAfter" class="bar after"></div></div><p class="subtle cost-note" id="note">Analyze a program to see the estimated cost difference.</p></section></div>
+      </section>
+      <section id="explore" class="visual-section"><div class="section-heading"><div><h2>Explore your program</h2><p class="subtle">Switch between graphs and detailed analysis.</p></div></div><div class="panel explorer-panel"><div class="tabbar" role="tablist" aria-label="Analysis visualizations"><button class="tab active" data-tab="cfg-view" role="tab" aria-selected="true">Control-flow graph</button><button class="tab" data-tab="dag-view" role="tab" aria-selected="false">Expression DAG</button><button class="tab" data-tab="notes-view" role="tab" aria-selected="false">Analysis details</button></div><div class="tab-content active" id="cfg-view" role="tabpanel"><p class="subtle">Execution paths, conditional branches, and loop back-edges in the original program.</p><div class="graph-wrap"><svg id="cfg" viewBox="0 0 640 260" role="img" aria-label="Control flow graph"></svg></div></div><div class="tab-content" id="dag-view" role="tabpanel" hidden><p class="subtle">Expression dependencies and shared computations in the original program.</p><div class="graph-wrap"><svg id="graph" viewBox="0 0 640 260" role="img" aria-label="Expression dependency graph"></svg></div></div><div class="tab-content" id="notes-view" role="tabpanel" hidden><div class="notes-grid"><div><h3>Analysis notes</h3><div id="notices" class="notes-box">No analysis yet.</div></div><div><h3>Operation breakdown</h3><pre id="ops" class="ops-box">—</pre></div></div></div></div></section>
+      <section id="energy" class="energy-section"><div class="section-heading"><div><h2>Hardware energy lab</h2><p class="subtle">Optional measurements from your own machine.</p></div></div><div class="panel energy-panel"><div class="energy-icon">◉</div><div class="energy-copy"><h3>Benchmark energy measurement</h3><p>Compare two bundled, trusted C benchmarks using available hardware power readings. Pasted editor code is <strong>never executed</strong>.</p><details><summary>Requirements & measurement notes</summary><p>Requires clang and supported energy telemetry. On macOS, run <code>sudo -v</code> in the same terminal before measurement. Results include other system activity and are not isolated program energy.</p></details><div id="energyResult" class="energy-result" aria-live="polite">No measurement collected yet.</div></div><button id="measureEnergy" class="btn btn-primary energy-button">◉ Measure energy</button></div></section>
+    </main><footer>Compiler Analysis Studio <span>Research prototype · Conservative transformations · Local execution</span></footer>
+  </div>
+</div><script src="/static/app.js"></script></body></html>
